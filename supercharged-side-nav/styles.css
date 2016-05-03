@@ -1,4 +1,6 @@
-/* Following the Supercharged livestream found here: https://www.youtube.com/watch?v=e5CXg1sjTqQ */
+/**
+ * Following the Supercharged livestream found here: https://www.youtube.com/watch?v=e5CXg1sjTqQ
+**/
 
 * {
 	box-sizing: border-box; /* The width and height properties (and min/max properties) includes content, padding and border, but not the margin */
@@ -8,6 +10,7 @@ html, body {
 	padding: 0;
 	margin: 0;
 	background: #FAFAFA;
+  font-family: Arial, sans-serif;
 }
 
 .header {
@@ -22,7 +25,7 @@ html, body {
 	padding: 0 16px;
 }
 
-.header__menu-toggle {
+.header__menu--show {
 	background: none;
 	border: none;
 	width: 24px;
@@ -30,4 +33,103 @@ html, body {
 	padding: 0;
 	margin: 0;
 	color: #FFF;
+}
+
+.side-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none; /* mouse event to go "through" the element and target whatever is "underneath" that element instead */
+}
+
+.side-nav--visible { /* -- means modifier of */
+  pointer-events: auto;
+}
+
+.side-nav::before {
+  content: ''; /* used with the :before and :after pseudo-elements, to insert generated content */
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0; /* full transparency */
+  will-change: opacity; /* hint at expected change on the element for the browser */
+  transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+}
+
+.side-nav__container { /* __ means child of */
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  background: #FFF;
+  height: 100%;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.4); /* x y blur color */
+  transform: translateX(-102%);
+  display: flex;
+  flex-direction: column;
+}
+
+.side-nav--animatable .side-nav__container {
+  transition: transform 0.13s cubic-bezier(0,0,0.3,1);
+}
+
+.side-nav--visible.side-nav--animatable .side-nav__container {
+  transition: transform 0.33s cubic-bezier(0,0,0.3,1);
+}
+
+.side-nav--visible::before {
+  opacity: 1;
+}
+
+.side-nav--visible .side-nav__container {
+  transform: none;
+}
+
+.side-nav--hide {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: none;
+  border: none;
+  color: #FFF;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+}
+
+.side-nav__header {
+  height: 200px;
+  background: #3498DB;
+  color: #FFF;
+  display: flex;
+  padding: 16px;
+  align-items: flex-end;
+  font-size: 24px;
+}
+
+.side-nav__content {
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling */
+}
+
+.side-nav__content li {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 16px;
+}
+
+.side-nav__content li:hover {
+  background: #CCC;
 }
